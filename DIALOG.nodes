@@ -1,0 +1,98 @@
+[
+  {
+    "WriteText": [
+      "Toto je testovací dialog jedna.",
+      "Tento poté následuje..."
+    ],
+    "Args": [
+      "heal 10",
+      "Tento poté následuje..."
+    ],
+    "Options": [
+      {
+        "write": "Jít na okno 2",
+        "gotoID": "OKNO2",
+        "isBattle": false
+      },
+      {
+        "write": "Jít na okno 3",
+        "gotoID": "OKNO3",
+        "isBattle": false
+      },
+      {
+        "write": "Jít na okno 4",
+        "gotoID": "OKNO4",
+        "isBattle": false
+      },
+      {
+        "write": "Jít na okno 5",
+        "gotoID": "BOJ5",
+        "isBattle": true
+      }
+    ],
+    "NodeID": "0"
+  },
+  {
+    "WriteText": [
+      "OKNO2 JE TU!!"
+    ],
+    "Options": [
+      {
+        "write": "OKNO3",
+        "gotoID": "OKNO3",
+        "isBattle": false
+      },
+      {
+        "write": "ZPĚT",
+        "gotoID": "0",
+        "isBattle": false
+      }
+    ],
+    "NodeID": "OKNO2"
+  },
+  {
+    "WriteText": [
+      "Tak, okno3!"
+    ],
+    "Options": [
+      {
+        "write": "Zpět na první blok.",
+        "gotoID": "0",
+        "isBattle": false
+      }
+    ],
+    "NodeID": "OKNO3"
+  },
+  {
+    "WriteText": [
+      "Tady by mohl být zajímavý příběh... v těh oknech a spusta možností co by každý mohl upravovat... ale udělat GUI v Eclipse se mi nechce..."
+    ],
+    "Args": [
+      "end"
+    ],
+    "Options": [
+      {
+        "write": ". . .",
+        "gotoID": "0",
+        "isBattle": false
+      }
+    ],
+    "NodeID": "OKNO4"
+  },
+  {
+    "WriteText": [
+      "Vypadá to že jste prohrál..."
+    ],
+    "Args": [
+      "reset"
+    ],
+    "Options": [
+      {
+        "write": "Začít znovu",
+        "gotoID": "0",
+        "isBattle": false
+      }
+    ],
+    "NodeID": "dead"
+  }
+]
