@@ -300,6 +300,8 @@ public class FrontEnd {
 	
 	public void Battle(BattleNode node)
 	{
+		
+		
 		boolean IsBattling = true;
 		
 		//BATTLE LOGIC HERE
@@ -381,16 +383,37 @@ public class FrontEnd {
 			}
 		}
 		
-		// Apply The Thingies
+// APPLY BATTLE
+		
+		double DefenceFactor = 1d - (stats.Defense/100d);
 		
 		if(inp == 1)
 		{
+			DefenceFactor += DefenceFactor * 0.2;
+		
+			if(DefenceFactor > 1)
+				DefenceFactor = 1;
+			
+			Utils.print(DefenceFactor);
+			
 			Utils.print("->\tZaútoèil jste pomocí " + stats.activeWeapon.name);
 			node.health -= Utils.Math.randInt(stats.activeWeapon.damage,stats.activeWeapon.damage + 10) * (1 - (node.Defense/100));
 		}
 		
+		if(inp != 2 && node.health > 0)
+			stats.damage(Utils.Math.randInt(node.Damage,node.Damage + 10) * DefenceFactor);
 		
-		stats.damage(Utils.Math.randInt(stats.activeWeapon.damage,stats.activeWeapon.damage + 10) * (1 - (node.Defense/100)));
+		if(inp == 2 && node.health > 0) {
+			DefenceFactor = DefenceFactor /2 ;
+			
+			Utils.print(DefenceFactor);
+			
+			if(DefenceFactor > 1)
+				DefenceFactor = 1;
+			
+			stats.damage(Utils.Math.randInt(node.Damage,node.Damage + 10) * DefenceFactor);
+		}
+		
 		//Utils.print(node.Damage + "//" + stats.Defense);
 		//Utils.print(stats.activeWeapon.damage + "//" + node.Defense);
 		
@@ -400,14 +423,14 @@ public class FrontEnd {
 		
 		
 		// BATTLE ENDED, WIN
-			if(node.health <= 0 && stats.health > 0)
+			if(node.health <= 0 && stats.Health > 0)
 			{
 				nodeID = node.gotoID;
 				Await = false;
 				IsBattling = false;
 			} 
-		// BATTLE ENDED, FAILED.	
-			else if(stats.health <= 0)
+		// BATTLE ENDED, FAILED.		
+			else if(stats.Health <= 0d)
 			{
 				nodeID = "dead";
 				Await = false;

@@ -1,5 +1,5 @@
 
-public class PlayerStats extends Character{
+public class PlayerStats{
 
 	Integer Health = 100;
 	Integer maxHealth = 100;
@@ -62,6 +62,21 @@ public class PlayerStats extends Character{
 		if(Health > maxHealth)
 			Health = maxHealth;
 	}
+	
+	public void damage (Double Amount)
+	{
+		if(Amount < 0)
+		{
+			Amount = -Amount;
+		}
+		
+		Health -= Amount.intValue();
+		if(Health <= 0)
+		{
+			isAlive = false;
+		}
+	}
+	
 	
 	public void damage (int Amount)
 	{

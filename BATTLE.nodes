@@ -22,8 +22,8 @@
         "whileHealth": 80
       }
     ],
-    "Damage": 5,
-    "Defense": 5,
+    "Damage": 10,
+    "Defense": 50,
     "flee": false,
     "Description": "DESCRIPTION",
     "NodeID": "THIS 7X",
