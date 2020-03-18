@@ -3,19 +3,35 @@ public class PlayerStats extends Character{
 
 	Integer Health = 100;
 	Integer maxHealth = 100;
+
+	public Integer Defense = 50;
 	
-	public Integer ActiveWeaponID = 0;
-	Integer ActiveMaskID = 0;
+	public Weapon activeWeapon;
 	
-	private Weapon wpn;
+	
+	public int healthPacks = 1;
+	
+	
+	public ItemManager Mgr = new ItemManager();
+	
+	
+	
+	
 	
 	boolean isAlive = true;
 	
-	public PlayerStats(Integer health, Integer activeWeaponID, Integer activeMaskID) {
+	public void Init()
+	{
+		Mgr.Init();
+	}
+	
+	public PlayerStats(Integer health, String activeWeaponID, String activeMaskID) {
 		super();
+		Mgr.Init();
 		Health = health;
-		ActiveWeaponID = activeWeaponID;
-		ActiveMaskID = activeMaskID;
+		
+		activeWeapon = Mgr.getWeapon(activeWeaponID);
+		//ActiveMaskID = activeMaskID;
 		
 		//GET WEAPON BY ID BY ITEMMANAGER
 	}
@@ -27,6 +43,20 @@ public class PlayerStats extends Character{
 		{
 			Amount = -Amount;
 		}
+		
+		Health += Amount;
+		if(Health > maxHealth)
+			Health = maxHealth;
+	}
+	
+	public void useHealthPack (int Amount)
+	{
+		if(Amount < 0)
+		{
+			Amount = -Amount;
+		}
+		
+		healthPacks -= 1;
 		
 		Health += Amount;
 		if(Health > maxHealth)
@@ -64,28 +94,28 @@ public class PlayerStats extends Character{
 	
 	
 	
-	public Integer getActiveWeaponID() {
-		return ActiveWeaponID;
+	public String getActiveWeaponID() {
+		return activeWeapon.id;
 	}
 
 
 
-	public void setActiveWeaponID(Integer activeWeaponID) {
-		ActiveWeaponID = activeWeaponID;
+	public void setActiveWeaponID(String activeWeaponID) {
+		activeWeapon = Mgr.getWeapon(activeWeaponID);
 	}
 
 
-
-	public Integer getActiveMaskID() {
-		return ActiveMaskID;
+/*
+	public String getActiveMaskID() {
+		return activeMaskID;
 	}
 
-
-
-	public void setActiveMaskID(Integer activeMaskID) {
+*/
+/*
+	public void setActiveMaskID(String activeMaskID) {
 		ActiveMaskID = activeMaskID;
 	}
-
+*/
 
 
 	public PlayerStats() {

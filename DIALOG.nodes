@@ -84,7 +84,16 @@
       "Vypadá to že jste prohrál..."
     ],
     "Args": [
-      "reset"
+      "end"
+    ],
+    "NodeID": "dead"
+  },
+  {
+    "WriteText": [
+      "Výhra!"
+    ],
+    "Args": [
+      "end"
     ],
     "Options": [
       {
@@ -93,6 +102,6 @@
         "isBattle": false
       }
     ],
-    "NodeID": "dead"
+    "NodeID": "win"
   }
 ]

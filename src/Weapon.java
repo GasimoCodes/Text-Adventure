@@ -1,7 +1,7 @@
 
 public class Weapon extends Item{
 	
-	Integer damage;
+	Integer damage = null;
 	
 	public Weapon(String ItemName, String ItemID, boolean ItemCanStack, int ItemCount, String ItemDescription, int ItemDamage)
 	{
@@ -9,7 +9,7 @@ public class Weapon extends Item{
 		super.name = ItemName;
 		super.id = ItemID;
 		super.description = ItemDescription;
-		this.damage = damage;
+		this.damage = ItemDamage;
 		
 	}
 	

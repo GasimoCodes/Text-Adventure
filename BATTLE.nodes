@@ -11,7 +11,7 @@
     "flee": false,
     "Description": "DESCRIPTION",
     "NodeID": "BOJ5",
-    "gotoID": "0",
+    "gotoID": "win",
     "health": 100,
     "name": "WREEEEEEEEEEEEEEEE"
   },

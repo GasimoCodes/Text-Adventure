@@ -20,7 +20,7 @@ public class FrontEnd {
 	NodeManager NMgr = new NodeManager();
 	//Temporary String to Read/Write
 	public String TempString;
-	
+	String nodeID = "0";
 	//Additional Properties
 	Scanner sc;
 	boolean Await = false;
@@ -29,7 +29,10 @@ public class FrontEnd {
 	public void Init()
 	{
 		
+		stats.Init();
 		File file = new File(System.getProperty("user.dir")+"/"+"DIALOG.nodes");
+		
+		Mgr.End = this;
 		Mgr.Init();
 		
 		//READ THE DIALOG
@@ -51,6 +54,7 @@ public class FrontEnd {
 			Init();
 		}
 		
+		stats.activeWeapon = Mgr.getWeapon("0");
 		
 		//READ BATTLE DATABASE
 		File file2 = new File(System.getProperty("user.dir")+"/"+"BATTLE.nodes");
@@ -89,7 +93,7 @@ public class FrontEnd {
 		sc = new Scanner(System.in);
 		end = false;
 		Integer ID = 0;
-		String nodeID = "0";
+		
 		
 		
 		Utils.print("PRAGUE 2033");
@@ -277,7 +281,7 @@ public class FrontEnd {
 		//SLEEEEEEEEEEEEEEEEEP?.	
 		}
 		
-		
+		isBattleTime = false;
 	
 	}
 			
@@ -302,36 +306,74 @@ public class FrontEnd {
 		while(IsBattling) //ADD IS ALIVE HERE :EYES:
 		{
 			
+		Utils.print("->\t(Vaše životy: " + stats.Health+")" + "\t(" + node.name + " životy" + ": " + node.health + ")");
 		
 			// Ask what to do
-		if(stats.ActiveWeaponID != 0)
+		if(stats.activeWeapon.id.compareTo("0") != 0)
 		{
-		Utils.print("->\tZaútoèit pomocí " + Mgr.getItem(stats.ActiveWeaponID.toString()).name + "[1]");
+		Utils.print("->\tZaútoèit pomocí " + stats.activeWeapon.name + "[1]");
 		} else {
-		Utils.print("->\tZaútoèit pomocí " + Mgr.getItem(stats.ActiveWeaponID.toString()).name + "[1]");
+		Utils.print("->\tZaútoèit. " + "[1]");
+		}
+		Utils.print("->\tBránit se. [2]");
+			
+		if(stats.healthPacks >= 1)
+		{
+		Utils.print("->\tPoužít Lékárnièku. (" + stats.healthPacks + ") [3]");
 		}
 		
+		Utils.print(Utils.div());	
 		
-		
-		
-		Utils.print("->\tOchránit se");
-		
-		
-		
-			
 		// Get input
 		boolean inpwait = true;
+		int inp = 0;
 		while(inpwait)	{
 			try {
 				
-				Integer Input = Integer.parseInt(sc.nextLine());
+				Utils.printCol("-> \t");
+					
 				
-				if(Input > 0 && Input <= 3)
+				Integer Input = Integer.parseInt(sc.nextLine());
+				inp = Input;
+				
+			if(Input > 0 && Input <= 3)
+			{
+					
+				// IF ELSE
+				if(Input != 3)
 				{
-				inpwait = false;
+					
+					inpwait = false;
+						
+						
 				} else {
-				Utils.print("Akce " + Input + " neexistuje. Zkuste to znovu nebo použijte /help.");
+				
+					
+					// IF HEAL
+					if(Input == 3 && stats.healthPacks <= 0)
+					{
+						
+						Utils.print("Nelze použít Lékárnièku, protože žádná nezbývá v inventáøi.");
+						inpwait = true;
+					
+					} else {
+						
+						if(inp == 3)
+						{
+							Utils.print("->\tPoužili jste Lékárnièku.");
+							stats.useHealthPack(Utils.Math.randInt(50, 100));	
+							inpwait = true;
+						}
+						
+					}
+					
 				}
+
+					
+				} else {
+				
+					Utils.print("Akce " + Input + " neexistuje. Zkuste to znovu nebo použijte /help.");
+				}	
 			
 			} catch(Exception E) {
 				Utils.print("Zadejte prosím èíslo pro zvolení akce nebo /help pro pomoc");
@@ -339,7 +381,39 @@ public class FrontEnd {
 			}
 		}
 		
-		//Battle Results
+		// Apply The Thingies
+		
+		if(inp == 1)
+		{
+			Utils.print("->\tZaútoèil jste pomocí " + stats.activeWeapon.name);
+			node.health -= Utils.Math.randInt(stats.activeWeapon.damage,stats.activeWeapon.damage + 10) * (1 - (node.Defense/100));
+		}
+		
+		
+		stats.damage(Utils.Math.randInt(stats.activeWeapon.damage,stats.activeWeapon.damage + 10) * (1 - (node.Defense/100)));
+		//Utils.print(node.Damage + "//" + stats.Defense);
+		//Utils.print(stats.activeWeapon.damage + "//" + node.Defense);
+		
+		// Attack
+
+			//stats.health = stats.health - 20;//Utils.Math.randInt(node.Damage,node.Damage + 5);// * (1 - (stats.Defense/100));
+		
+		
+		// BATTLE ENDED, WIN
+			if(node.health <= 0 && stats.health > 0)
+			{
+				nodeID = node.gotoID;
+				Await = false;
+				IsBattling = false;
+			} 
+		// BATTLE ENDED, FAILED.	
+			else if(stats.health <= 0)
+			{
+				nodeID = "dead";
+				Await = false;
+				IsBattling = false;
+			}
+			
 			
 			
 		}
@@ -383,6 +457,8 @@ public class FrontEnd {
 			//giveMedkit
 			if (Args[0].toLowerCase().compareTo("givemedkit") == 0 && Args.length == 1)
 			{
+				
+				stats.healthPacks += 1;
 				
 			}
 			
