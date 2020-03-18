@@ -2,7 +2,8 @@
   {
     "WriteText": [
       "Toto je testovací dialog jedna.",
-      "Tento poté následuje..."
+      "Tento poté následuje...",
+      "Pro nejnovější verzi projektu navštivte: https://github.com/Brokop/Text-Adventure"
     ],
     "Args": [
       "heal 10",
