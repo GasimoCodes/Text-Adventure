@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/proko/Downloads/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="E:/Unity/Text-Adventure/Libraries/gson-2.8.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
