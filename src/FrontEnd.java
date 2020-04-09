@@ -63,7 +63,7 @@ public class FrontEnd {
 					Scanner sce = new Scanner(file2, "UTF-8");
 					sce.useDelimiter("\\Z");
 					TempString = sce.next();
-					
+					sce.close();
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					Utils.print(e);
