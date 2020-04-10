@@ -1,17 +1,11 @@
 
+public class Main {
 
-public abstract class Main {
-
-	
 
 	public static void main(String[] Args) {
 		
-
-		FrontEnd Interface = new FrontEnd();	
-		
+		FrontEnd Interface = new FrontEnd();
 		Interface.Init();
-	
-		
 		
 	}
 }

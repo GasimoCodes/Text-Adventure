@@ -2,30 +2,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import org.springframework.scheduling.annotation.Async;
-
 import com.google.gson.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-
-@EnableAsync
-public class FrontEnd implements CommandLineRunner{
+public class FrontEnd {
 		
-	@Bean
-    public TaskExecutor threadPoolTaskExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(4);
-        executor.setMaxPoolSize(4);
-        executor.setThreadNamePrefix("sgfgd");
-        executor.initialize();
-        return executor;
-    }
 	
 	Gson gson = new Gson();
 	
@@ -45,14 +25,9 @@ public class FrontEnd implements CommandLineRunner{
 	Scanner sc;
 	boolean Await = false;
 	
-	
 
-	public Window mUI = new Window();
-
-	
 	public void Init()
 	{
-		//mUI.open();
 		
 		stats.Init();
 		File file = new File(System.getProperty("user.dir")+"/"+"DIALOG.nodes");
@@ -104,11 +79,13 @@ public class FrontEnd implements CommandLineRunner{
 		
 		
 		
-
+		
 		
 		Run();
 		
+		
 	}
+	
 	
 	public void Run()
 	{
@@ -571,13 +548,6 @@ public class FrontEnd implements CommandLineRunner{
 			end						// Ends the game, indicates the last node in branch.
 			
 		*/
-		
-	}
-
-
-	@Override
-	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
 		
 	}
 	
