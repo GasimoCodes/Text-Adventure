@@ -12,6 +12,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+import com.google.gson.*;
+
 
 public class Window {
 
@@ -21,14 +27,103 @@ public class Window {
 	 * Launch the application.
 	 * @param args
 	 */
+	
+	// - - - -
+	Gson gson = new Gson();
+	
+	boolean end = false;
+	//STORES ALL DIALOG DATA
+	DialogNode[] D_Nodes;
+	BattleNode[] B_Nodes;
+	
+	//Player Statistics
+	PlayerStats stats = new PlayerStats();
+	ItemManager Mgr = new ItemManager();
+	NodeManager NMgr = new NodeManager();
+	//Temporary String to Read/Write
+	public String TempString;
+	String nodeID = "0";
+	//Additional Properties
+	Scanner sc;
+	boolean Await = false;
+	// - - - - 
+	
+	
+	
 	public static void main(String[] args) {
+		
 		try {
 			Window window = new Window();
-			window.open();
+			Init();
+			window.open();	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void Init()
+	{
+		
+		stats.Init();
+		File file = new File(System.getProperty("user.dir")+"/"+"DIALOG.nodes");
+		
+		Mgr.End = this;
+		Mgr.Init();
+		
+		//READ THE DIALOG
+		try {
+			sc = new Scanner(file, "UTF-8");
+			sc.useDelimiter("\\Z"); 
+			TempString = sc.next();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		D_Nodes = null;
+		D_Nodes = gson.fromJson(TempString, DialogNode[].class);
+		
+		if (D_Nodes == null) {
+			Utils.print("An Error occured while reading: " + file + ", which cannot be correctly parsed.\n The operation will now retry.");
+			Init();
+		}
+		
+		stats.activeWeapon = Mgr.getWeapon("0");
+		
+		//READ BATTLE DATABASE
+		File file2 = new File(System.getProperty("user.dir")+"/"+"BATTLE.nodes");
+		
+				try {
+					Scanner sce = new Scanner(file2, "UTF-8");
+					sce.useDelimiter("\\Z");
+					TempString = sce.next();
+					sce.close();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					Utils.print(e);
+				}
+				
+				B_Nodes = null;
+				B_Nodes = gson.fromJson(TempString, BattleNode[].class);
+				
+				if (B_Nodes == null) {
+					Utils.print("An Error occured while reading: " + file2 + ", which cannot be correctly parsed.\n The operation will now retry.");
+					Init();
+				}
+		
+		
+		
+		
+		
+		Run();
+		
+		
+	}
+	
+	
+	
 
 	/**
 	 * Open the window.
@@ -94,5 +189,13 @@ public class Window {
 		btnNewButton.setText("New Button");
 
 	}
+	
+	public void WriteHelpDialog()
+	{	
+		Utils.print("Napište èíslo aby jste zvolili výše zobrazenou možnost.");
+		//Utils.print("/inv \t pro zobrazení inventáøe");
+	}
+	
+	
 
 }
