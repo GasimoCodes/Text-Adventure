@@ -1,4 +1,8 @@
-
+/**
+ * Contains Weapon-Like object logistics.
+ * 
+ * @author Prokop Svaèina
+ */
 public class Weapon extends Item{
 	
 	Integer damage = null;

@@ -1,4 +1,8 @@
-
+/**
+ * Contains necessary data for Dialog type Nodes.
+ * 
+ * @author Prokop Svaèina
+ */
 public class DialogNode {
 
 	// Node ID

@@ -1,4 +1,8 @@
-
+/**
+ * Contains necessary data for Battle Progress, similar to DialogOption.js
+ * 
+ * @author Prokop Svaèina
+ */
 public class BattleProgress {
 
 	String write;

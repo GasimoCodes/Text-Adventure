@@ -1,4 +1,8 @@
-
+/**
+ * Contains necessary data for Item type objects.
+ * 
+ * @author Prokop Svaèina
+ */
 public class Item {
 	
 	String name;

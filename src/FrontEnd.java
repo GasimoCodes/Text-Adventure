@@ -2,8 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javax.swing.SwingUtilities;
+
 import com.google.gson.*;
 
+@Deprecated
 public class FrontEnd {
 		
 	
@@ -25,14 +28,27 @@ public class FrontEnd {
 	Scanner sc;
 	boolean Await = false;
 	
+	Window GUI = new Window();
+	Thread GUI_T = new Thread(GUI);
 
+	
+	
 	public void Init()
 	{
-		
+		GUI_T.start();
 		stats.Init();
 		File file = new File(System.getProperty("user.dir")+"/"+"DIALOG.nodes");
 		
-		Mgr.End = this;
+		SwingUtilities.invokeLater(new Runnable(){
+
+		    public void run(){
+		        GUI.print("sometext1");
+		    }
+		});
+
+		
+// Disabled Manager for compatibility reasons as this is now OBSOLETE		
+// Mgr.End = this;
 		Mgr.Init();
 		
 		//READ THE DIALOG
@@ -78,7 +94,9 @@ public class FrontEnd {
 				}
 		
 		
+
 		
+
 		
 		
 		Run();
@@ -89,6 +107,7 @@ public class FrontEnd {
 	
 	public void Run()
 	{
+		
 		boolean isBattleTime = false;
 		sc = new Scanner(System.in);
 		end = false;
@@ -550,6 +569,8 @@ public class FrontEnd {
 		*/
 		
 	}
+	
+
 	
 	
 	

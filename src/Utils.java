@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Random;
 
 
-/** 
-Swuaca utils so he wont have to type for hours, it really hurts. May not be redistributed.
-*/
+/**
+ * Utilities commonly used by me by default.
+ * 
+ * @author Prokop Svaèina
+ */
 public class Utils {
 
 	// []

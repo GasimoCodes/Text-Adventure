@@ -1,4 +1,8 @@
-
+/**
+ * Contains necessary data for Battle Nodes, this is fed to a different system than for the basic Dialog Nodes.
+ * 
+ * @author Prokop Svaèina
+ */
 public class BattleNode extends Character {
 
 	

@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 import com.google.gson.Gson;
 
+/**
+ * Manager used to work with items and their serialization.
+ * 
+ * @author Prokop Svaèina
+ */
 public class ItemManager {
 	
 	Weapon[] Weapons;
@@ -11,7 +16,7 @@ public class ItemManager {
 	int Heals;
 	
 	Gson gson = new Gson();
-	FrontEnd End;
+	Window End;
 	
 	public void Init()
 	{

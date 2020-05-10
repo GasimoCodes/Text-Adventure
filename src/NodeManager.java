@@ -1,4 +1,8 @@
-
+/**
+ * Class for managing Nodes and its functions.
+ * 
+ * @author Prokop Svaèina
+ */
 public class NodeManager {
 
 	public void Init()

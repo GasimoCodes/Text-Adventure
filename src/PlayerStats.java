@@ -1,4 +1,8 @@
-
+/**
+ * Contains Player Statistics and tools to operate with them. 
+ * 
+ * @author Prokop Svaèina
+ */
 public class PlayerStats{
 
 	Integer Health = 100;

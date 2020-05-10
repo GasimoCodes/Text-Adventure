@@ -1,4 +1,8 @@
-
+/**
+ * Contains necessary data for Dialog Options.
+ * 
+ * @author Prokop Svaèina
+ */
 public class DialogOption {	
 	
 	String write;
