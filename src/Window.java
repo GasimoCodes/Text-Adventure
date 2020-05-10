@@ -266,10 +266,25 @@ public class Window implements Runnable {
 	Display.getDefault().asyncExec(new Runnable() {
         public void run() {
         	styledText.setText(styledText.getText() + "\n" + obj);
-        	
+        	updateScroll();
         }
      });
 	}
+	
+	
+	/**
+     * Updates GUI Panels to adjust the Scroll Values to the text
+     *
+     */
+	public void updateScroll() {
+	Display.getDefault().asyncExec(new Runnable() {
+        public void run() {
+        	scrolledComposite.update();
+        	Utils.print("UPDATED");
+        }
+     });
+	}
+	
 	
 	
 	/**
