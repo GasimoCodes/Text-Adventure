@@ -219,7 +219,7 @@ public class Window implements Runnable {
 		combo.setBounds(0, 0, 91, 23);
 		
 		btnNewButton = new Button(composite_1, SWT.NONE);
-		btnNewButton.setText("New Button");
+		btnNewButton.setText("Confirm");
 		
 		// When finished loading, inform the other thread.
 		windowReady = true;
