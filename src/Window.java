@@ -190,7 +190,7 @@ public class Window implements Runnable {
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		Label lblWreee = new Label(sashForm, SWT.NONE);
-		lblWreee.setText("WREEE");
+		lblWreee.setText("- TBSE v " + settings.getVersionText() + " -");
 		sashForm.setWeights(new int[] {1});
 		
 		scrolledComposite = new ScrolledComposite(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -202,7 +202,7 @@ public class Window implements Runnable {
 		composite_2.setLayout(new GridLayout(1, false));
 		
 		styledText = new StyledText(composite_2, SWT.BORDER | SWT.WRAP);
-		styledText.setText("STORY-BASED TEXT ENGINE v " + settings.getVersionText());
+		styledText.setText("TEXT-BASED STORY ENGINE v " + settings.getVersionText());
 		styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		styledText.setEditable(false);
 		scrolledComposite.setContent(composite_2);
