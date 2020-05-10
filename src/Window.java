@@ -52,6 +52,9 @@ public class Window implements Runnable {
 	public DialogNode[] D_Nodes;
 	public BattleNode[] B_Nodes;
 	
+	// - - - Other Data Containers
+	public SettingsData settings = new SettingsData();
+	
 	
 	// - - - GUI Containers
 	Composite composite;
@@ -175,7 +178,7 @@ public class Window implements Runnable {
 	protected void createContents() {
 		shell = new Shell();
 		shell.setSize(450, 300);
-		shell.setText("TBSE | v 0.1a");
+		shell.setText("TBSE | v " + settings.getVersionText());
 		shell.setMinimumSize(new Point(430, 360));
 		shell.setSize(581, 590);
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -198,8 +201,8 @@ public class Window implements Runnable {
 		composite_2 = new Composite(scrolledComposite, SWT.NONE);
 		composite_2.setLayout(new GridLayout(1, false));
 		
-		styledText = new StyledText(composite_2, SWT.BORDER);
-		styledText.setText("STORY-BASED TEXT ENGINE v 0.1a");
+		styledText = new StyledText(composite_2, SWT.BORDER | SWT.WRAP);
+		styledText.setText("STORY-BASED TEXT ENGINE v " + settings.getVersionText());
 		styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		styledText.setEditable(false);
 		scrolledComposite.setContent(composite_2);
@@ -267,6 +270,7 @@ public class Window implements Runnable {
         public void run() {
         	styledText.setText(styledText.getText() + "\n" + obj);
         	updateScroll();
+
         }
      });
 	}
@@ -279,8 +283,16 @@ public class Window implements Runnable {
 	public void updateScroll() {
 	Display.getDefault().asyncExec(new Runnable() {
         public void run() {
+
+        	styledText.layout();
+        	composite_2.update();
+        	composite_2.layout();
         	scrolledComposite.update();
         	Utils.print("UPDATED");
+        	shell.layout();
+        	scrolledComposite.layout();
+        	scrolledComposite.setMinSize(composite_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        	scrolledComposite.setOrigin(scrolledComposite.getSize().x, scrolledComposite.getSize().y + 50);
         }
      });
 	}
@@ -306,7 +318,8 @@ public class Window implements Runnable {
 	public void printOption(Object obj) {
 	Display.getDefault().asyncExec(new Runnable() {
         public void run() {
-        	combo.add((String) obj, 0);
+        	combo.add((String) obj, 0);        	
+        	
         }
      });
 	}
@@ -371,7 +384,7 @@ public class Window implements Runnable {
 			
 			buttonSetEnabled(true);
 			
-			Utils.print(Thread.getAllStackTraces());
+			// Utils.print(Thread.getAllStackTraces());
 			
 			boolean tempInputLegit = true;
 			
@@ -400,6 +413,8 @@ public class Window implements Runnable {
 				}
 
 			}
+			
+			awaitGUI = true;
 			
 			buttonSetEnabled(false);
 			
