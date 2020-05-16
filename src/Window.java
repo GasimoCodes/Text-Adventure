@@ -366,7 +366,10 @@ public class Window implements Runnable {
 		return TempString;
 	}
 	
-	
+	/**
+     * Serializes Input into ID
+     * @return String of the ID.
+     */
 	public String input2id() {
 		
 		boolean waitInput = true;
@@ -408,7 +411,6 @@ public class Window implements Runnable {
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -418,7 +420,11 @@ public class Window implements Runnable {
 			
 			buttonSetEnabled(false);
 			
+			
 			Input = getComboText();
+			
+			printCol(Input);
+			
 			resetOptions();
 			
 			// IF HELP
@@ -437,36 +443,47 @@ public class Window implements Runnable {
 				    try {			    	
 						Thread.sleep(500);
 				    } catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			// ELSE	
 			} else {
 				
-				
 				// We need to detect whether we are using a number or string to describe chosen value
 				
-				if(Input.length() <= 1) {
+				if(Input.length() <= 1) { // Check for lenght below one, this is probably a number
 				
 					try {
-						if(Integer.parseInt(Input) <= i && Integer.parseInt(Input) > 0)
+						if(Integer.parseInt(Input) <= D_Nodes[ID].Options.length && Integer.parseInt(Input) > 0)
 						{
 							waitInput = false;
-							//print(i);
+							return Input;
+
 						} else {
+							
 						print("Èíslo " + Input + " není ani jedna z možností");
 						WriteHelpDialog();
+						
 						}
 					} catch(Exception e) {
 						print("Napište /help pro pomoc pøi zadávání." + e.toString());
 					}
 					
 			} else {
-				
-				
-				
+
 				// Input detected to A: Not be a valid number, or B: An actual input string.
+				
+				i = 0;
+				//TODO Check this and compare to the IDs above, we need consistency
+				for (DialogOption s : D_Nodes[ID].Options) 
+				{ 
+				    i++;
+				    if(s.write.compareTo(Input) == 0)
+				    {
+				    	return Integer.toString(i);
+				    }
+				}
+				
 				
 				
 				
