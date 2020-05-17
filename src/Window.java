@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.SwingUtilities;
@@ -293,7 +295,12 @@ public class Window implements Runnable {
         	shell.layout();
         	scrolledComposite.layout();
         	scrolledComposite.setMinSize(composite_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        	scrolledComposite.setOrigin(scrolledComposite.getSize().x, scrolledComposite.getSize().y + 50);
+        	scrolledComposite.setOrigin(0, 999999999);	// I don't want to know why, I don't want to wonder how.
+        												// I shouldn't need to wonder why, but for whatever reason this hack works the best around here.
+        												// Anything else will break the limit anyway, this is the easiest and most reliable way to do this. 
+        												// I hope this implementation is so bad that they wont let me ever write Java SWT Code again.
+        	
+        												// 17.05 23:00 | This is probably a hack I feel the worst for... I know there will be that one time someone is gonna break the limit... It can't work... yet it does...
         }
      });
 	}
@@ -328,14 +335,13 @@ public class Window implements Runnable {
 	
 	/**
      * Sets the input button to either be enabled or disabled to prevent input while loading.
-     * @param obj - DialogOption to be printed
+     * @param obj - Option to be printed
      * @param index - Index of the option to be printed
      */
-	@Deprecated
-	public void printOption(DialogOption obj, int index) {
+	public void printOption(Object obj, int index) {
 	Display.getDefault().asyncExec(new Runnable() {
         public void run() {
-        	combo.add(obj.write, index);
+        	combo.add(obj.toString(), index);
         	combo.select(0);
         }
      });
@@ -368,15 +374,33 @@ public class Window implements Runnable {
 	}
 	
 	/**
-     * Serializes Input into ID
+     * Serializes Input into ID, then after input retrieves chosen option
      * @return String of the ID.
      */
-	public String input2id() {
+	public String input2id(List<String> options) {
+		int i = 0;
+		// We list all options to input
+		for (String s : options) 
+		{ 
+		    i++;
+		    print("-> \t" + s + "\t[" + i + "]");
+		    printOption(s, i-1);
+		    
+		    try {			    	
+				Thread.sleep(500);
+			
+		    } catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		print(Utils.div());
 		
 		boolean waitInput = true;
 		awaitGUI = true;
 		String Input = null;
-		int i = 0;
+
 		
 		while(waitInput) {
 			
@@ -436,10 +460,10 @@ public class Window implements Runnable {
 				
 			// Write Options
 				i = 0;
-				for (DialogOption s : D_Nodes[ID].Options) 
+				for (String s : options) 
 				{ 
 				    i++;
-				    print("-> \t" + s.write + "\t[" + i + "]");
+				    print("-> \t" + s + "\t[" + i + "]");
 				    
 				    try {			    	
 						Thread.sleep(500);
@@ -452,10 +476,10 @@ public class Window implements Runnable {
 				
 				// We need to detect whether we are using a number or string to describe chosen value
 				
-				if(Input.length() <= 1) { // Check for lenght below one, this is probably a number
+				if(Input.length() <= 1) { // Check for char length below one, this is probably a number
 				
 					try {
-						if(Integer.parseInt(Input) <= D_Nodes[ID].Options.length && Integer.parseInt(Input) > 0)
+						if(Integer.parseInt(Input) <= options.size() && Integer.parseInt(Input) > 0)
 						{
 							waitInput = false;
 							return Input;
@@ -476,11 +500,10 @@ public class Window implements Runnable {
 				
 				i = 0;
 				//TODO Check this and compare to the IDs above, we need consistency
-				if(!isBattleTime)
-				for (DialogOption s : D_Nodes[ID].Options) 
+				for (String s : options) 
 				{ 
 				    i++;
-				    if(s.write.compareTo(Input) == 0)
+				    if(s.compareTo(Input) == 0)
 				    {
 				    	return Integer.toString(i);
 				    }
@@ -568,26 +591,19 @@ public class Window implements Runnable {
 				SpecialCommand(D_Nodes[ID].Args);
 			}
 	
-	// Check if the game hasnt ended already, if so we dont want any input from the nodes to be displayed.
+	// Check if the game has not ended already, if so we dont want any input from the nodes to be displayed.
 			if(end != true)
 			{
 				
-	// Write Options
+	// Write Options - MOVED TO input2id logic loop
 			int i = 0;
+			List<String> Options = new ArrayList<String>();
 			for (DialogOption s : D_Nodes[ID].Options) 
 			{ 
 			    i++;
-			    print("-> \t" + s.write + "\t[" + i + "]");
-			    printOption(s.write);
+			    Options.add(s.write);
 			    //print(i);
-			    
-			    try {			    	
-					Thread.sleep(500);
-				
-			    } catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
 			}
 			
 			
@@ -599,7 +615,7 @@ public class Window implements Runnable {
 			
 	//INPUT PHASE
 			
-			Input = input2id();
+			Input = input2id(Options);
 			
 			// END OF LOOP
 			
@@ -674,7 +690,7 @@ public class Window implements Runnable {
 	}
 	
 	/**
-     * Shortcut for help dialog, will later move to be read from a file.
+     * Shortcut for help dialog. (will later move to be read from a file?).
      * 
      */
 	public void WriteHelpDialog()
@@ -697,23 +713,29 @@ public class Window implements Runnable {
 		while(IsBattling) //ADD IS ALIVE HERE :EYES:
 		{
 			
+		List<String> Options = new ArrayList<String>();
+		print(" - - - - - " + stats.healthPacks + " - - - - - ");
+			
 		print("->\t(Vaše životy: " + stats.Health+")" + "\t(" + node.name + " životy" + ": " + node.health + ")");
 		
 			// Ask what to do
 		if(stats.activeWeapon.id.compareTo("0") != 0)
 		{
-		print("->\tZaútoèit pomocí " + stats.activeWeapon.name + "[1]");
+			Options.add("Zaútoèit pomocí " + stats.activeWeapon.name);
 		} else {
-		print("->\tZaútoèit. " + "[1]");
+			Options.add("Zaútoèit");
 		}
-		print("->\tBránit se. [2]");
+			Options.add("Bránit se");
 			
 		if(stats.healthPacks >= 1)
 		{
-		print("->\tPoužít Lékárnièku. (" + stats.healthPacks + ") [3]");
+			Options.add("Použít Lékárnièku. (" + stats.healthPacks + ")");
 		}
 		
 		print(Utils.div());	
+		
+		
+		
 		
 		// Get input
 		boolean inpwait = true;
@@ -724,7 +746,7 @@ public class Window implements Runnable {
 				printCol("-> \t");
 					
 				
-				Integer Input = Integer.parseInt(sc.nextLine());
+				Integer Input = Integer.parseInt(input2id(Options));
 				inp = Input;
 				
 			if(Input > 0 && Input <= 3)
