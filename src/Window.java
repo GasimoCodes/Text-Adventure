@@ -466,7 +466,7 @@ public class Window implements Runnable {
 						
 						}
 					} catch(Exception e) {
-						print("Napište /help pro pomoc pøi zadávání." + e.toString());
+						print("Napište /help pro pomoc pøi zadávání.");
 					}
 					
 			} else {
@@ -489,6 +489,8 @@ public class Window implements Runnable {
 				
 				
 			}
+			
+				
 				
 			
 		}
@@ -574,7 +576,7 @@ public class Window implements Runnable {
 			{ 
 			    i++;
 			    print("-> \t" + s.write + "\t[" + i + "]");
-			    printOption(s, (i - 1));
+			    printOption(s.write);
 			    //print(i);
 			    
 			    try {			    	
