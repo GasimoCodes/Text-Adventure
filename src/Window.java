@@ -47,6 +47,7 @@ public class Window implements Runnable {
 	boolean windowReady = false;
 	boolean awaitGUI = false;
 	Integer ID = 0;
+	boolean isBattleTime = false;
 	
 	// - - - Story Data Containers
 	public DialogNode[] D_Nodes;
@@ -475,6 +476,7 @@ public class Window implements Runnable {
 				
 				i = 0;
 				//TODO Check this and compare to the IDs above, we need consistency
+				if(!isBattleTime)
 				for (DialogOption s : D_Nodes[ID].Options) 
 				{ 
 				    i++;
@@ -518,7 +520,7 @@ public class Window implements Runnable {
 	public void runStory()
 	{
 		
-		boolean isBattleTime = false;
+		isBattleTime = false;
 		sc = new Scanner(System.in);
 		end = false;
 		ID = 0;
