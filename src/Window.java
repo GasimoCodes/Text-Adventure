@@ -249,7 +249,7 @@ public class Window implements Runnable {
 	}
 
 	/**
-     * Sets the input button to either be enabled or disabled to prevent input while loading.
+     * Sets the input button to either be enabled or disabled in order to prevent input.
      * @param enabled - Keep true to enable, or false to disable button input
      */
 	public void buttonSetEnabled(boolean enabled) {
@@ -295,7 +295,7 @@ public class Window implements Runnable {
         	shell.layout();
         	scrolledComposite.layout();
         	scrolledComposite.setMinSize(composite_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        	scrolledComposite.setOrigin(0, 999999999);	// I don't want to know why, I don't want to wonder how.
+        	scrolledComposite.setOrigin(0, 999999999);	// I don't want to know why
         												// I shouldn't need to wonder why, but for whatever reason this hack works the best around here.
         												// Anything else will break the limit anyway, this is the easiest and most reliable way to do this. 
         												// I hope this implementation is so bad that they wont let me ever write Java SWT Code again.

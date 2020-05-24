@@ -1,68 +1,50 @@
 [
   {
     "WriteText": [
-      "Toto je testovací dialog jedna.",
-      "Tento poté následuje...",
-      "Pro nejnovější verzi projektu navštivte: https://github.com/Brokop/Text-Adventure"
+      "\"Před týdnem nahlásili v odlehlé horské vesnici zmizení několika lidí...\"",
+      "\"Vše jsme prozkoumali jak nám řekli, žádné stopy po nikom. Chtěli jsme to označit jako každý druhý případ a odložit.\"",
+      "\"To bylo však do té doby než jsme ten signál dostali taky. Všichni jsme to tu ve stanici viděli...\"",
+      "\"Nový vysílání... LCN1 se to jmenovalo. Ten kanál údajně nevysílal už od osmdesátých let. Ale dnes se objevil znovu. O celých 25 let později...\"",
+      "\"Ani by jsme si toho nevšimli kdyby se tam neobjevily všechny ty zmizelé osoby...\"",
+      "\"Vystupovali tam jeden po druhým v nějakým pořadu... vypadali že ani neví že zmizeli...\"",
+      "\"Taky v tom pořadu byl moderátor... ten ten co celý nějak řídil...\"",
+      "\"Takovej případ jsem fakt nečekal, ale dostali nás k tomu ať vystopujem zdroj.\"",
+      "\"Bude to ještě chvíli trvat než tam dorazíme.\""
     ],
-    "Args": [
-      "heal 10",
-      "Tento poté následuje..."
-    ],
+    "Args": [],
     "Options": [
       {
-        "write": "Jít na okno 2",
-        "gotoID": "OKNO2",
+        "write": "Čekat",
+        "gotoID": "CAR_WAIT",
         "isBattle": false
-      },
-      {
-        "write": "Jít na okno 3",
-        "gotoID": "OKNO3",
-        "isBattle": false
-      },
-      {
-        "write": "Jít na okno 4",
-        "gotoID": "OKNO4",
-        "isBattle": false
-      },
-      {
-        "write": "Jít na okno 5",
-        "gotoID": "BOJ5",
-        "isBattle": true
       }
     ],
     "NodeID": "0"
   },
   {
     "WriteText": [
-      "OKNO2 JE TU!!"
+      "Venku je slyšet bubnování kapek na sklo. Hlasité bzučení kol jak se prosekávají bahnem je čím dál tím hlasitější.",
+      "Cesta zatím plyne klidně"
     ],
     "Options": [
       {
-        "write": "OKNO3",
-        "gotoID": "OKNO3",
+        "write": "Kouknout se z okna",
+        "gotoID": "CAR_VAR1",
         "isBattle": false
-      },
-      {
-        "write": "ZPĚT",
-        "gotoID": "0",
+        },
+        {
+        "write": "Zkontrolovat vysílačku",
+        "gotoID": "CAR_VAR2",
         "isBattle": false
-      }
-    ],
-    "NodeID": "OKNO2"
-  },
-  {
-    "WriteText": [
-      "Tak, okno3!"
-    ],
-    "Options": [
-      {
-        "write": "Zpět na první blok.",
-        "gotoID": "0",
+        },
+        {
+        "write": "Čekat dál...",
+        "gotoID": "CAR_VAR2",
         "isBattle": false
-      }
+        }
+      
     ],
-    "NodeID": "OKNO3"
+    "NodeID": "CAR_WAIT"
   },
   {
     "WriteText": [
