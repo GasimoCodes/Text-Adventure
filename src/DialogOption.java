@@ -9,10 +9,16 @@ public class DialogOption {
 	String gotoID;
 	boolean isBattle = false;
 	
-	public DialogOption(String Message, String gotoOptionID, boolean isbattle){	
+	// New stuff
+	String[] commands;
+	String[] conditions;
+	
+	public DialogOption(String Message, String gotoOptionID, boolean isbattle, String[] commands, String[] conditions){	
 		write = Message;
-		isBattle = isbattle;
+		this.isBattle = isbattle;
 		gotoID = gotoOptionID;
+		this.commands = commands;
+		this.conditions = conditions;
 	}
 	
 }

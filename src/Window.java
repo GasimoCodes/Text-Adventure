@@ -50,6 +50,9 @@ public class Window implements Runnable {
 	boolean awaitGUI = false;
 	Integer ID = 0;
 	boolean isBattleTime = false;
+	long waitTime = 200; //ms?
+	
+	ArrayList<DialogOption> tempOptions = new ArrayList<DialogOption>();
 	
 	// - - - Story Data Containers
 	public DialogNode[] D_Nodes;
@@ -291,7 +294,7 @@ public class Window implements Runnable {
         	composite_2.update();
         	composite_2.layout();
         	scrolledComposite.update();
-        	Utils.print("UPDATED");
+        	// Utils.print("UPDATED");
         	shell.layout();
         	scrolledComposite.layout();
         	scrolledComposite.setMinSize(composite_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -569,6 +572,16 @@ public class Window implements Runnable {
 		else
 			ID = NMgr.getNodeID("dead", D_Nodes);
 			
+		
+		
+		// Execute Commands		
+		
+		if(D_Nodes[ID].Args != null)
+		{
+			Utils.print("ARGS DETECTED");
+			SpecialCommand(D_Nodes[ID].Args);
+		}
+		
 			
 	// Write Node Start
 			
@@ -576,20 +589,13 @@ public class Window implements Runnable {
 			{ 
 			    print(s);
 			    try {
-					Thread.sleep(200);
+					Thread.sleep(waitTime);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			
-	// Execute Commands		
-			
-			if(D_Nodes[ID].Args != null)
-			{
-				//print("ARGS DETECTED");
-				SpecialCommand(D_Nodes[ID].Args);
-			}
 	
 	// Check if the game has not ended already, if so we dont want any input from the nodes to be displayed.
 			if(end != true)
@@ -630,7 +636,8 @@ public class Window implements Runnable {
 			nextNodeID = D_Nodes[ID].Options[Integer.parseInt(Input) - 1].gotoID;
 			
 			//Pront
-			print("->\t" + D_Nodes[ID].Options[Integer.parseInt(Input) - 1].write);
+			if(D_Nodes[ID].Options[Integer.parseInt(Input) - 1].commands != null)
+			SpecialCommand(D_Nodes[ID].Options[Integer.parseInt(Input) - 1].commands);
 			
 			//Check if its battle type ID
 			isBattleTime = D_Nodes[ID].Options[Integer.parseInt(Input) - 1].isBattle;
@@ -935,6 +942,20 @@ public class Window implements Runnable {
 				}
 			}
 			
+			//set Delay
+			if (Args[0].toLowerCase().compareTo("setdelay") == 0 && Args.length == 2)
+			{
+				
+				try
+				{
+					
+					waitTime = Integer.parseInt(Args[1]);
+				} catch (Exception e) {
+				print("Cannot execute setDelay: " + e.toString());
+				}
+			}
+			
+			
 			//set heal
 			if (Args[0].toLowerCase().compareTo("end") == 0 && Args.length == 1)
 			{
@@ -958,6 +979,7 @@ public class Window implements Runnable {
 			setHealth <amount>		// Forces health value
 			damage <amount>			// Deals damage by amount
 			heal <amount>			// Heals by amount
+			setDelay <amount>		// Sets the delay used in Dialog Listing in milliseconds.
 			
 			end						// Ends the game, indicates the last node in branch.
 			
