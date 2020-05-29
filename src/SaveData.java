@@ -13,6 +13,7 @@ public class SaveData {
 
 	public SaveValue[] savedValues = new SaveValue[1];
 	public String lastNodeID = "0"; 
+	public Boolean isBattle = false;
 	
 	Integer Health = 100;
 	Integer maxHealth = 200;

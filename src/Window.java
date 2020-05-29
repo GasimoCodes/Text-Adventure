@@ -573,14 +573,8 @@ public class Window implements Runnable {
 				    }
 				}
 				
-				
-				
-				
-				
 			}
-			
-				
-				
+
 			
 		}
 			
@@ -707,6 +701,11 @@ public class Window implements Runnable {
 			nodeID = nextNodeID;	
 			//print(nodeID);
 			
+			
+			SaveCurrent();
+			
+			
+			
 		//End of check if game already ended.	
 		}
 			
@@ -735,14 +734,19 @@ public class Window implements Runnable {
 		
 		if(ez == -1)
 		{
-			print("NO ID MATCH FOUND FOR " + nodeID + "(B_ID), PERHAPS THE DATABASE IS CORRUPTED?");
+			print("AN CRITICAL ERROR HAS OCCURED WHILE READING STORY, TARGET NODE APPEARS TO BE MISSING.");
 		}
 		
 		ID = ez;
 					
 		Await = true;
+		
+		
+		SaveCurrent();
+		
 
 		Battle(B_Nodes[ID]);
+		
 		while(Await)
 		{
 		//SLEEEEEEEEEEEEEEEEEP?.	
@@ -781,6 +785,7 @@ public class Window implements Runnable {
 		stats.maxHealth = S_Data.maxHealth;
 		stats.healthPacks = S_Data.healthPacks;
 		stats.isAlive = S_Data.isAlive;
+		isBattleTime = S_Data.isBattle;
 		
 		nodeID = S_Data.lastNodeID;
 		
@@ -800,7 +805,7 @@ public class Window implements Runnable {
 		S_Data.maxHealth = stats.maxHealth;
 		S_Data.healthPacks = stats.healthPacks;
 		S_Data.isAlive = stats.isAlive;
-
+		S_Data.isBattle = isBattleTime;
 		
 		S_Data.lastNodeID = nodeID;
 		
@@ -819,6 +824,15 @@ public class Window implements Runnable {
 			
 		} else {
 		
+			Utils.print("[SAVE]\tCannot save because the save file is missing, the system will now create a new file.");
+			
+			try {
+				Save.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 	}
