@@ -11,6 +11,8 @@ public class DialogOption {
 	
 	// New stuff
 	String[] commands;
+	
+	// CONDITIONS: COMMANDS WHICH RETRIEVE TRUE / FALSE, ALL MUST BE RIGHT IN ORDER TO PASS
 	String[] conditions;
 	
 	public DialogOption(String Message, String gotoOptionID, boolean isbattle, String[] commands, String[] conditions){	

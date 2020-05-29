@@ -25,7 +25,7 @@ public class ItemManager {
 		
 		String TempString = "";
 		Scanner sc;
-		File file = new File(System.getProperty("user.dir")+"/"+"ITEMS.nodes");
+		File file = new File(System.getProperty("user.dir")+"/Story"+"/"+"ITEMS.nodes");
 
 		//READ THE ITEMS
 				try {
@@ -50,7 +50,7 @@ public class ItemManager {
 				//READ THE WEAPONS
 				
 				
-				file = new File(System.getProperty("user.dir")+"/"+"WEAPONS.nodes");
+				file = new File(System.getProperty("user.dir")+"/Story"+"/"+"WEAPONS.nodes");
 				
 				try {
 					sc = new Scanner(file, "UTF-8");

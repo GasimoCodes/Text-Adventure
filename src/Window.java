@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -41,6 +43,8 @@ public class Window implements Runnable {
 	public ItemManager Mgr = new ItemManager();
 	public NodeManager NMgr = new NodeManager();
 	
+	File Save = new File(System.getProperty("user.dir")+"/Story"+"/"+"USERDATA.sav");
+	
 	// - - - Temporary Primitives
 	boolean end = false;
 	String TempString;
@@ -60,6 +64,7 @@ public class Window implements Runnable {
 	
 	// - - - Other Data Containers
 	public SettingsData settings = new SettingsData();
+	public SaveData S_Data = new SaveData();
 	
 	
 	// - - - GUI Containers
@@ -97,7 +102,7 @@ public class Window implements Runnable {
 	public void Init()
 	{
 		stats.Init();
-		File file = new File(System.getProperty("user.dir")+"/"+"DIALOG.nodes");
+		File file = new File(System.getProperty("user.dir")+"/Story"+"/"+"DIALOG.nodes");
 		
 		Mgr.End = this;
 		Mgr.Init();
@@ -124,7 +129,7 @@ public class Window implements Runnable {
 		stats.activeWeapon = Mgr.getWeapon("0");
 		
 		//READ BATTLE DATABASE
-		File file2 = new File(System.getProperty("user.dir")+"/"+"BATTLE.nodes");
+		File file2 = new File(System.getProperty("user.dir")+"/Story"+"/"+"BATTLE.nodes");
 		
 				try {
 					Scanner sce = new Scanner(file2, "UTF-8");
@@ -143,6 +148,62 @@ public class Window implements Runnable {
 					print("An Error occured while reading: " + file2 + ", which cannot be correctly parsed.\n The operation will now retry.");
 					Init();
 				}
+				
+				
+
+				
+				
+		//Read Save Files if present
+		if(Save.exists())
+		{
+			try {
+					Scanner sce = new Scanner(Save, "UTF-8");
+					sce.useDelimiter("\\Z");
+					TempString = sce.next();
+					sce.close();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					print(e);
+				}
+				
+				S_Data = null;
+				S_Data = gson.fromJson(TempString, SaveData.class);
+				LoadFromSave();
+				
+				
+				if (S_Data == null) {
+					print("An Error occured while reading: " + Save + ", which cannot be correctly parsed.");
+					List<String> opt = new ArrayList(); 
+					
+					opt.add("Retry");
+					opt.add("Create new save file");
+					opt.add("Exit");
+					
+					input2id(opt);
+					
+					Init();
+				}
+				
+		} else {
+			
+			Utils.print("SAVE FILE NOT FOUND, SKIPPING.");
+			try {
+				
+				/*
+				S_Data = new SaveData(new SaveValue[]{new SaveValue("Test", "True")}, stats, "");
+				Utils.print(gson.toJson(S_Data));
+				*/
+				
+				Save.createNewFile();
+				Files.write(Save.toPath(), gson.toJson(S_Data).getBytes());
+			
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 		
 		
 		while(windowReady)
@@ -706,6 +767,62 @@ public class Window implements Runnable {
 		//print("/inv \t pro zobrazení inventáøe");
 	}
 	
+	
+	/**
+     * Load Saved Data
+     * 
+     */
+	public void LoadFromSave()
+	{	
+		
+		stats.Health = S_Data.Health;
+		stats.activeWeapon = S_Data.activeWeapon;
+		stats.Defense = S_Data.Defense;
+		stats.maxHealth = S_Data.maxHealth;
+		stats.healthPacks = S_Data.healthPacks;
+		stats.isAlive = S_Data.isAlive;
+		
+		nodeID = S_Data.lastNodeID;
+		
+		Utils.print("SAVEFILE LOADED.");
+	}
+	
+	/**
+     * Save Current Data
+     * 
+     */
+	public void SaveCurrent()
+	{	
+		
+		S_Data.Health = stats.Health;
+		S_Data.activeWeapon = stats.activeWeapon;
+		S_Data.Defense = stats.Defense;
+		S_Data.maxHealth = stats.maxHealth;
+		S_Data.healthPacks = stats.healthPacks;
+		S_Data.isAlive = stats.isAlive;
+
+		
+		S_Data.lastNodeID = nodeID;
+		
+		if(Save.exists())
+		{
+			
+			try {
+				
+				Files.write(Save.toPath(), gson.toJson(S_Data).getBytes());
+				
+				
+			} catch (Exception e) {
+			
+			
+			}
+			
+		} else {
+		
+		}
+		
+	}
+	
 	/**
      * Story loop for battle sequences, when done switches back to main story - run()
      * @param node - Battle Node to be passed for the sequence event.
@@ -988,6 +1105,46 @@ public class Window implements Runnable {
 	}
 	
 	
+	/**
+     * Parses various Conditions
+     * @param Condition - Condition to return
+     * @return Condition
+     */
+	public boolean GetCondition(String Condition) {
+				
+			String[] Args = Utils.inputSerialize(Condition, " ");
+			
+			
+			//load story saveID
+			if (Args[0].toLowerCase().compareTo("load") == 0 && Args.length == 2)
+			{
+				
+				
+			}
+			
+			return false;
+			
+			
+		}
+		
+		
+		//List of returns:
+		
+		/*
+			giveItem <ItemID>		// Gives item by id 
+			giveWeapon <WeaponID>	// Gives weapon by id
+			clearWeapon				// Clears all weapons
+			giveMedkit				// Gives x medkits 
+			
+			setHealth <amount>		// Forces health value
+			damage <amount>			// Deals damage by amount
+			heal <amount>			// Heals by amount
+			setDelay <amount>		// Sets the delay used in Dialog Listing in milliseconds.
+			
+			end						// Ends the game, indicates the last node in branch.
+			
+		*/
+		
 	
 	
 	

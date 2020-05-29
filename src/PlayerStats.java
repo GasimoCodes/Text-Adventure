@@ -12,9 +12,7 @@ public class PlayerStats{
 	
 	public Weapon activeWeapon;
 	
-	
 	public int healthPacks = 1;
-	
 	
 	public ItemManager Mgr = new ItemManager();
 	

@@ -5,7 +5,7 @@
  */
 public class SettingsData {
 
-	public double version = 1.5;
+	public double version = 1.6;
 	
 	public enum vTypes {RELEASE, RELEASECANDIDATE, BETA, ALPHA, DEBUG}
 	

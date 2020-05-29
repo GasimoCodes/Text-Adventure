@@ -3,7 +3,7 @@
  * 
  * @author Prokop Svaèina
  */
-public class Weapon extends Item{
+public class Weapon extends Item {
 	
 	Integer damage = null;
 	
