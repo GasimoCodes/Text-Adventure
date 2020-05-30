@@ -14,7 +14,7 @@ public class SaveData {
 	// REST
 	
 
-	public List<SaveValue> savedValues = new ArrayList();
+	public List<SaveToken> savedValues = new ArrayList();
 	public String lastNodeID = "0"; 
 	public Boolean isBattle = false;
 	
@@ -35,11 +35,11 @@ public class SaveData {
      * @param id - ID to be saved under
      * @param value - Value to be saved
      */
-	public void addSaveValue(String id, String value) {
+	public void addSaveToken(String id, String value) {
 		
 		int i = 0;
 		// Check for duplicates
-		for(SaveValue x : savedValues)
+		for(SaveToken x : savedValues)
 		{
 			if(x.saveID == id)
 			{
@@ -51,11 +51,36 @@ public class SaveData {
 		}
 		
 		
-		savedValues.add(new SaveValue(value, id));
+		savedValues.add(new SaveToken(value, id));
+	}
+	
+	
+	/**
+     * Adds a value to be saved under an id, duplicate IDs will get rewritten.
+     * @param id - ID to be saved under
+     * @param value - Value to be saved
+     */
+	public void removeToken(String id, String value) {
+		
+		int i = 0;
+		// Check for duplicates
+		for(SaveToken x : savedValues)
+		{
+			if(x.saveID == id)
+			{
+				Utils.print("[SAVE] WARNING, CONDITION WITH ID " + x.saveID + " ALREADY EXISTS AND WILL BE OVERWRITTEN");
+				savedValues.remove(i);
+			}
+			
+			i++;
+		}
+		
+		
+		savedValues.add(new SaveToken(value, id));
 	}
 
 
-	public SaveData(List<SaveValue> savedValues, String lastNodeID, Integer health, Integer maxHealth, Integer defense,
+	public SaveData(List<SaveToken> savedValues, String lastNodeID, Integer health, Integer maxHealth, Integer defense,
 		
 		Weapon activeWeapon, int healthPacks, boolean isAlive) {
 		super();
