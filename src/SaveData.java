@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Contains necessary data for Save Data
  * 
@@ -11,7 +14,7 @@ public class SaveData {
 	// REST
 	
 
-	public SaveValue[] savedValues = new SaveValue[1];
+	public List<SaveValue> savedValues = new ArrayList();
 	public String lastNodeID = "0"; 
 	public Boolean isBattle = false;
 	
@@ -27,9 +30,32 @@ public class SaveData {
 	boolean isAlive = true;
 	
 	
+	/**
+     * Adds a value to be saved under an id, duplicate IDs will get rewritten.
+     * @param id - ID to be saved under
+     * @param value - Value to be saved
+     */
+	public void addSaveValue(String id, String value) {
+		
+		int i = 0;
+		// Check for duplicates
+		for(SaveValue x : savedValues)
+		{
+			if(x.saveID == id)
+			{
+				Utils.print("[SAVE] WARNING, CONDITION WITH ID " + x.saveID + " ALREADY EXISTS AND WILL BE OVERWRITTEN");
+				savedValues.remove(i);
+			}
+			
+			i++;
+		}
+		
+		
+		savedValues.add(new SaveValue(value, id));
+	}
 
 
-	public SaveData(SaveValue[] savedValues, String lastNodeID, Integer health, Integer maxHealth, Integer defense,
+	public SaveData(List<SaveValue> savedValues, String lastNodeID, Integer health, Integer maxHealth, Integer defense,
 		
 		Weapon activeWeapon, int healthPacks, boolean isAlive) {
 		super();

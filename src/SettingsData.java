@@ -5,11 +5,11 @@
  */
 public class SettingsData {
 
-	public double version = 1.6;
+	static double version = 1.64;
 	
 	public enum vTypes {RELEASE, RELEASECANDIDATE, BETA, ALPHA, DEBUG}
 	
-	public vTypes releaseType = vTypes.ALPHA;
+	public vTypes releaseType = vTypes.DEBUG;
 	
 	
 	public String getTypeLetter()	
@@ -21,13 +21,13 @@ public class SettingsData {
 			case BETA:
 				return "b";
 			case RELEASECANDIDATE:
-				return "a";
+				return "rc";
 			case RELEASE:
-				return "a";
+				return "";
 			case DEBUG:
-				return "a";
+				return "d";
 			default:
-				return "u";
+				return "";
 		}
 	}
 	
