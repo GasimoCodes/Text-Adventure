@@ -56,27 +56,23 @@ public class SaveData {
 	
 	
 	/**
-     * Adds a value to be saved under an id, duplicate IDs will get rewritten.
-     * @param id - ID to be saved under
-     * @param value - Value to be saved
+     * Removes a token under an id.
+     * @param id - ID to be removed
      */
-	public void removeToken(String id, String value) {
+	public void removeToken(String id) {
 		
 		int i = 0;
-		// Check for duplicates
+		// Loop for desired id
 		for(SaveToken x : savedValues)
 		{
 			if(x.saveID == id)
 			{
-				Utils.print("[SAVE] WARNING, CONDITION WITH ID " + x.saveID + " ALREADY EXISTS AND WILL BE OVERWRITTEN");
+				Utils.print("[SAVE] Token with ID " + x.saveID + " has been terminated.");
 				savedValues.remove(i);
 			}
-			
 			i++;
 		}
-		
-		
-		savedValues.add(new SaveToken(value, id));
+
 	}
 
 
@@ -93,8 +89,6 @@ public class SaveData {
 		this.healthPacks = healthPacks;
 		this.isAlive = isAlive;
 	}
-
-
 
 
 	public SaveData() {

@@ -5,11 +5,11 @@
  */
 public class SettingsData {
 
-	static double version = 1.64;
+	static double version = 1.7;
 	
 	public enum vTypes {RELEASE, RELEASECANDIDATE, BETA, ALPHA, DEBUG}
 	
-	public vTypes releaseType = vTypes.DEBUG;
+	public vTypes releaseType = vTypes.ALPHA;
 	
 	
 	public String getTypeLetter()	

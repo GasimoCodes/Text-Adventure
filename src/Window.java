@@ -411,6 +411,9 @@ public class Window implements Runnable {
      });
 	}
 	
+	/**
+     * Resets GUI Dialog 
+     */
 	public void resetOptions() {
 	Display.getDefault().asyncExec(new Runnable() {
         public void run() {
@@ -662,8 +665,33 @@ public class Window implements Runnable {
 			for (DialogOption s : D_Nodes[ID].Options) 
 			{ 
 			    i++;
+			    
+			    
+			    boolean Pass = true;
+			    Integer ConPass = 0;
+			    
+			    if(s.conditions != null)	{
+				    for(String str : s.conditions) {
+				    	if(GetCondition(str))
+				    	ConPass ++;
+				    }
+				    
+				    if(ConPass == s.conditions.length) {
+				    
+				    	Pass = true;
+				    	Utils.print("[DEBUG]\tALL CONDITIONS TRUE");
+				    } else  {
+				    	Utils.print("[DEBUG]\tSOME CONDITIONS FALSE");
+				    }
+			    
+			    }
+			    
+			    if(Pass) {
+			    	
 			    Options.add(s.write);
-			    //print(i);
+			    
+			    }
+
 
 			}
 			
@@ -1112,6 +1140,9 @@ public class Window implements Runnable {
 			heal <amount>			// Heals by amount
 			setDelay <amount>		// Sets the delay used in Dialog Listing in milliseconds.
 			
+			setToken <ID> <VALUE>	// Schedules save token.
+			removeToken <ID>		// Schedules save token.			
+			
 			end						// Ends the game, indicates the last node in branch.
 			
 		*/
@@ -1130,7 +1161,7 @@ public class Window implements Runnable {
 			
 			
 			//load story saveID
-			if (Args[0].toLowerCase().compareTo("load") == 0 && Args.length == 2)
+			if (Args[0].toLowerCase().compareTo("gettoken") == 0 && Args.length == 2)
 			{
 				
 				
@@ -1145,17 +1176,7 @@ public class Window implements Runnable {
 		//List of returns:
 		
 		/*
-			giveItem <ItemID>		// Gives item by id 
-			giveWeapon <WeaponID>	// Gives weapon by id
-			clearWeapon				// Clears all weapons
-			giveMedkit				// Gives x medkits 
-			
-			setHealth <amount>		// Forces health value
-			damage <amount>			// Deals damage by amount
-			heal <amount>			// Heals by amount
-			setDelay <amount>		// Sets the delay used in Dialog Listing in milliseconds.
-			
-			end						// Ends the game, indicates the last node in branch.
+			getToken <ID> <VALUE>		// Schedules save token.			
 			
 		*/
 		
