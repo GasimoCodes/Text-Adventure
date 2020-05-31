@@ -1153,7 +1153,7 @@ public class Window implements Runnable {
 	/**
      * Parses various Conditions
      * @param Condition - Condition to return
-     * @return Condition
+     * @return boolean - Condition
      */
 	public boolean GetCondition(String Condition) {
 				
@@ -1163,9 +1163,20 @@ public class Window implements Runnable {
 			//load story saveID
 			if (Args[0].toLowerCase().compareTo("gettoken") == 0 && Args.length == 2)
 			{
-				
-				
+
+					// Loop for desired id
+					for(SaveToken x : S_Data.savedValues)
+					{
+						if(x.saveID == Args[1])
+						{
+							Utils.print("[SAVE] Token with ID " + x.saveID + " has been found.");
+							return true;
+						}
+					}
+
 			}
+				
+			
 			
 			return false;
 			

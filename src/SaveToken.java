@@ -1,3 +1,8 @@
+/**
+ * Contains data for Save Tokens 
+ * 
+ * @author Prokop Svaèina
+ */
 public class SaveToken {
 
 	public String value = "false";
