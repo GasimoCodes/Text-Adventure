@@ -66,7 +66,6 @@ public class Window implements Runnable {
 	public SettingsData settings = new SettingsData();
 	public SaveData S_Data = new SaveData();
 	
-	
 	// - - - GUI Containers
 	Composite composite;
 	SashForm sashForm;
@@ -672,8 +671,10 @@ public class Window implements Runnable {
 			    
 			    if(s.conditions != null)	{
 				    for(String str : s.conditions) {
-				    	if(GetCondition(str))
+				    	
+				    	if(GetCondition(str)) {
 				    	ConPass ++;
+				    	}
 				    }
 				    
 				    if(ConPass == s.conditions.length) {
@@ -682,6 +683,9 @@ public class Window implements Runnable {
 				    	Utils.print("[DEBUG]\tALL CONDITIONS TRUE");
 				    } else  {
 				    	Utils.print("[DEBUG]\tSOME CONDITIONS FALSE");
+				    	
+				    	Pass = false;
+				    	
 				    }
 			    
 			    }
@@ -1123,6 +1127,12 @@ public class Window implements Runnable {
 					stats = new PlayerStats();
 			}
 			
+			//set token
+			if (Args[0].toLowerCase().compareTo("settoken") == 0 && Args.length == 3)
+			{
+					S_Data.addSaveToken(Args[1],Args[2]);
+			}
+			
 			
 		}
 		
@@ -1170,6 +1180,25 @@ public class Window implements Runnable {
 						if(x.saveID == Args[1])
 						{
 							Utils.print("[SAVE] Token with ID " + x.saveID + " has been found.");
+							return true;
+						}
+					}
+
+			}
+			
+			//load token negation
+			if (Args[0].toLowerCase().compareTo("getinvertedtoken") == 0 && Args.length == 2)
+			{
+
+					// Loop for desired id
+					for(SaveToken x : S_Data.savedValues)
+					{
+						if(x.saveID == Args[1])
+						{
+							Utils.print("[SAVE] Token with ID " + x.saveID + " has been found.");
+							return false;
+						} else
+						{
 							return true;
 						}
 					}

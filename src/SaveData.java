@@ -50,7 +50,7 @@ public class SaveData {
 			i++;
 		}
 		
-		
+		Utils.print("[SAVE] Token with ID: "+ id + " / " + value + " has been scheduled.");
 		savedValues.add(new SaveToken(value, id));
 	}
 	

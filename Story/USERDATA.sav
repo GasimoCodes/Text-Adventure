@@ -1,1 +1,1 @@
-{"savedValues":[null],"lastNodeID":"CAR_WAIT","isBattle":false,"Health":100,"maxHealth":200,"Defense":0,"activeWeapon":{"damage":10,"name":"Generic Test","id":"GEN_01","description":"GENERIC"},"healthPacks":1,"isAlive":true}
+{"savedValues":[],"lastNodeID":"CAR_WAIT2","isBattle":false,"Health":100,"maxHealth":100,"Defense":50,"activeWeapon":{"damage":20,"name":"Nùž","id":"0","description":"Standart Military Knife"},"healthPacks":1,"isAlive":true}

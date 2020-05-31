@@ -1,87 +1,113 @@
 [
   {
     "WriteText": [
-      "\"Před týdnem nahlásili v odlehlé horské vesnici zmizení několika lidí...\"",
-      "\"To bylo však do té doby než jsme ten signál dostali taky. Všichni jsme to tu ve stanici viděli...\"",
-      
-      "\"Bude to ještě chvíli trvat než tam dorazíme.\""
+      "\"V dnech jako tento bych normálně byl doma na stanici...\"",
+      "\"Popíjel bych třeba kávu a sledoval jak se nic neděje.\"",
+      "\"Dnes ale ne, zmizení... a k tomu někde v odlehlý vesnici. Fakt lepší den nenašli.\"",
+      "\"Ani sem nedostal žádný bližší informace, jen sem nasedl a vyslali mě v tomto mizerným počasí.\"",
+      "Déšť je číl dál tím hlasitější a na cestě se začíná tvořit bláto, jedeš po hřebenu vysoké skály a začíná se pomalu stmívat.",
+      "\"Takhle pomalu ani neuvidím na cestu... měl bych zapnout dálkovky..\""
     ],
-    "Args": [
-      "setDelay 1800"
-    ],
+    "Args": [],
     "Options": [
       {
-        "write": "Čekat",
+        "write": "Zapnout dálková světla",
         "gotoID": "CAR_WAIT",
-        "isBattle": true,
-        "Args": ["end"]
+        "isBattle": false
       }
     ],
     "NodeID": "0"
   },
   {
     "WriteText": [
-      "Venku je slyšet uklidňující bubnování kapek na sklo."
+      "Dálková světla ozařují celou silnici a odráží se v tenké vrstvě louží, cesta nyní pokračuje do kopce.",
+      "Na navigaci se nyní ukazuje 12 Km do cíle...",
+      "\"Ještě dvanáct... to je doba...\""
     ],
     "Options": [
       {
         "write": "Kouknout se z okna",
         "gotoID": "CAR_VAR1",
         "isBattle": false
-        },
-        {
+      },
+      {
         "write": "Zkontrolovat vysílačku",
         "gotoID": "CAR_VAR2",
         "isBattle": false
-        },
-        {
+      },
+      {
         "write": "Čekat dál...",
         "gotoID": "CAR_VAR2",
-        "isBattle": false
-        }
-      
+        "isBattle": false,
+        "conditions": [
+          "gettoken CarPass1",
+          "gettoken CarPass3"
+          ]
+      }
     ],
     "NodeID": "CAR_WAIT"
   },
   {
     "WriteText": [
-      "Tady by mohl být zajímavý příběh... v těh oknech a spusta možností co by každý mohl upravovat... ale udělat GUI v Eclipse se mi nechce..."
+      "Na obzoru už není vydět ani slunce, naštěstí dálková světla ozařují cestu..."
     ],
-    "Args": [
-      "end"
-    ],
+    "Args": ["setToken CarPass1", "setToken CarPass2"],
+    "NodeID": "CAR_VAR1",
     "Options": [
       {
         "write": ". . .",
-        "gotoID": "0",
+        "gotoID": "CAR_WAIT2",
         "isBattle": false
       }
+    ]
+  },
+    {
+    "WriteText": [
+      "VYSÍLAČKA"
     ],
-    "NodeID": "OKNO4"
+    "Args": ["setToken CarPass3", "setToken CarPass2"],
+    "NodeID": "CAR_VAR2",
+    "Options": [
+      {
+        "write": ". . .",
+        "gotoID": "CAR_WAIT2",
+        "isBattle": false
+      }
+    ]
   },
   {
     "WriteText": [
-      "Vypadá to že jste prohrál..."
-    ],
-    "Args": [
-      "end"
-    ],
-    "NodeID": "dead"
-  },
-  {
-    "WriteText": [
-      "Výhra!"
-    ],
-    "Args": [
-      "end"
+      "Dálková světla ozařují celou silnici a odráží se v tenké vrstvě louží, cesta pokračuje do kopce.",
+      "Navigaci ukazuje 6 Km do cíle...",
+      "\". . .\""
     ],
     "Options": [
       {
-        "write": "Začít znovu",
-        "gotoID": "0",
-        "isBattle": false
+        "write": "Kouknout se z okna",
+        "gotoID": "CAR_VAR1",
+        "isBattle": false,
+          "conditions": [
+          "getinvertedtoken CarPass1"
+        ]
+      },
+      {
+        "write": "Zkontrolovat vysílačku",
+        "gotoID": "CAR_VAR2",
+        "isBattle": false,
+        "conditions": [
+          "getinvertedtoken CarPass3"
+        ]
+      },
+      {
+        "write": "Čekat dál...",
+        "gotoID": "CAR_VAR3",
+        "isBattle": false,
+        "conditions": [
+          "gettoken CarPass1",
+          "gettoken CarPass3"
+        ]
       }
     ],
-    "NodeID": "win"
+    "NodeID": "CAR_WAIT2"
   }
 ]
