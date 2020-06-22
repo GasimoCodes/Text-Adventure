@@ -43,14 +43,14 @@ public class SaveData {
 		{
 			if(x.saveID == id)
 			{
-				Utils.print("[SAVE] WARNING, CONDITION WITH ID " + x.saveID + " ALREADY EXISTS AND WILL BE OVERWRITTEN");
+				Utils.print("[SAVE]\tWARNING, CONDITION WITH ID " + x.saveID + " ALREADY EXISTS AND WILL BE OVERWRITTEN");
 				savedValues.remove(i);
 			}
 			
 			i++;
 		}
 		
-		Utils.print("[SAVE] Token with ID: "+ id + " / " + value + " has been scheduled.");
+		Utils.print("[SAVE]\tToken with ID: "+ id + " / " + value + " has been scheduled.");
 		savedValues.add(new SaveToken(value, id));
 	}
 	
@@ -67,7 +67,7 @@ public class SaveData {
 		{
 			if(x.saveID == id)
 			{
-				Utils.print("[SAVE] Token with ID " + x.saveID + " has been terminated.");
+				Utils.print("[SAVE]\tToken with ID " + x.saveID + " has been terminated.");
 				savedValues.remove(i);
 			}
 			i++;

@@ -296,7 +296,7 @@ public class Window implements Runnable {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Utils.print("- Input - " + combo.getText());
+				Utils.print("[INPUT]\t" + combo.getText());
 				awaitGUI = false;
 			}
 
@@ -318,7 +318,7 @@ public class Window implements Runnable {
 	public void buttonSetEnabled(boolean enabled) {
 	Display.getDefault().asyncExec(new Runnable() {
         public void run() {
-        	Utils.print("Buttonio Refreshio" + enabled);
+        	// Utils.print("Buttonio Refreshio" + enabled);
         	btnNewButton.setEnabled(enabled);
         	btnNewButton.redraw();
         	btnNewButton.update();
@@ -635,7 +635,7 @@ public class Window implements Runnable {
 		
 		if(D_Nodes[ID].Args != null)
 		{
-			Utils.print("ARGS DETECTED");
+			Utils.print("[DEBUG]\tARGUMENTS DETECTED");
 			SpecialCommand(D_Nodes[ID].Args);
 		}
 		
@@ -1130,7 +1130,17 @@ public class Window implements Runnable {
 			//set token
 			if (Args[0].toLowerCase().compareTo("settoken") == 0 && Args.length == 3)
 			{
+					Utils.print("[SAVE]\tCondition debug " + Args[1] + Args[2]);
 					S_Data.addSaveToken(Args[1],Args[2]);
+					SaveCurrent();
+			}
+			
+			//set token no value
+			if (Args[0].toLowerCase().compareTo("settoken") == 0 && Args.length == 2)
+			{
+					Utils.print("[SAVE]\tCondition debug 1 arg" + Args[1]);
+					S_Data.addSaveToken(Args[1],"");
+					SaveCurrent();
 			}
 			
 			
@@ -1170,15 +1180,19 @@ public class Window implements Runnable {
 			String[] Args = Utils.inputSerialize(Condition, " ");
 			
 			
+			
 			//load story saveID
 			if (Args[0].toLowerCase().compareTo("gettoken") == 0 && Args.length == 2)
 			{
-
+				
+				
+				Utils.print("DGB " + S_Data.savedValues.size() + " /COMPARE/ " + Args[1]);
 					// Loop for desired id
 					for(SaveToken x : S_Data.savedValues)
 					{
 						if(x.saveID == Args[1])
 						{
+							Utils.print("DGB " + x.saveID + " /COMPARE/ " + Args[1]);
 							Utils.print("[SAVE] Token with ID " + x.saveID + " has been found.");
 							return true;
 						}
@@ -1193,7 +1207,7 @@ public class Window implements Runnable {
 					// Loop for desired id
 					for(SaveToken x : S_Data.savedValues)
 					{
-						if(x.saveID == Args[1])
+						if(x.saveID == Args[1])		// TO-DO POSSIBILITY THAT RETURN DOES NOT BREAK THE BLOCK, POSSIBLE ISSUE WITH THE LOADING OF CONDITIONS? PROB NOT.
 						{
 							Utils.print("[SAVE] Token with ID " + x.saveID + " has been found.");
 							return false;
@@ -1205,8 +1219,6 @@ public class Window implements Runnable {
 
 			}
 				
-			
-			
 			return false;
 			
 			

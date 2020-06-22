@@ -51,7 +51,7 @@
     "WriteText": [
       "Na obzoru už není vydět ani slunce, naštěstí dálková světla ozařují cestu..."
     ],
-    "Args": ["setToken CarPass1", "setToken CarPass2"],
+    "Args": ["settoken CarPass1 true"],
     "NodeID": "CAR_VAR1",
     "Options": [
       {
@@ -65,7 +65,7 @@
     "WriteText": [
       "VYSÍLAČKA"
     ],
-    "Args": ["setToken CarPass3", "setToken CarPass2"],
+    "Args": ["setToken CarPass2 true", "setToken CarPass2 true"],
     "NodeID": "CAR_VAR2",
     "Options": [
       {
@@ -95,7 +95,7 @@
         "gotoID": "CAR_VAR2",
         "isBattle": false,
         "conditions": [
-          "getinvertedtoken CarPass3"
+          "getinvertedtoken CarPass2"
         ]
       },
       {
@@ -104,7 +104,7 @@
         "isBattle": false,
         "conditions": [
           "gettoken CarPass1",
-          "gettoken CarPass3"
+          "gettoken CarPass2"
         ]
       }
     ],
